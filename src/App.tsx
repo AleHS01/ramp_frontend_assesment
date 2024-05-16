@@ -20,14 +20,15 @@ export function App() {
   )
 
   const loadAllTransactions = useCallback(async () => {
-    setIsLoading(true)
+    if (!employees) {
+      setIsLoading(true)
+      await employeeUtils.fetchAll()
+      setIsLoading(false)
+    }
     transactionsByEmployeeUtils.invalidateData()
 
-    await employeeUtils.fetchAll()
     await paginatedTransactionsUtils.fetchAll()
-
-    setIsLoading(false)
-  }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
+  }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils, employees])
 
   const loadTransactionsByEmployee = useCallback(
     async (employeeId: string) => {
