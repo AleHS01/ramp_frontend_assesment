@@ -47,7 +47,10 @@ export const getTransactionsByEmployee = ({ employeeId }: RequestByEmployeeParam
   return data.transactions.filter((transaction) => transaction.employee.id === employeeId)
 }
 
-export const setTransactionApproval = ({ transactionId, value }: SetTransactionApprovalParams): void => {
+export const setTransactionApproval = ({
+  transactionId,
+  value,
+}: SetTransactionApprovalParams): boolean => {
   const transaction = data.transactions.find(
     (currentTransaction) => currentTransaction.id === transactionId
   )
@@ -57,4 +60,5 @@ export const setTransactionApproval = ({ transactionId, value }: SetTransactionA
   }
 
   transaction.approved = value
+  return true
 }
